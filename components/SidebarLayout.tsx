@@ -85,13 +85,13 @@ function ParallaxDots() {
   return <canvas ref={canvasRef} className="sticky top-0 w-full pointer-events-none z-0 -mb-[100vh]" style={{ height: '100vh' }} />;
 }
 
-export default function SidebarLayout({ children }: { children: React.ReactNode }) {
+export default function SidebarLayout({ children, profile }: { children: React.ReactNode; profile?: React.ReactNode }) {
   const [expanded, setExpanded] = useState(true);
   const sidebarW = expanded ? "13rem" : "3.5rem";
 
   return (
     <div className="flex h-screen bg-[#0a0a0f] overflow-hidden">
-      <Sidebar expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
+      <Sidebar expanded={expanded} onToggle={() => setExpanded((v) => !v)} profile={profile} />
 
       <div
         className="transition-all duration-300 flex-1 p-3 overflow-hidden"

@@ -1,22 +1,23 @@
 "use client";
-import { useState } from "react";
-import { Compass, Code2, Palette, Building2, User, Plus, Settings, HelpCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Compass, Palette, Building2, User, Settings, HelpCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 const navItems = [
-  { label: "Explore", icon: Compass },
-  { label: "Developer", icon: Code2 },
-  { label: "Creative", icon: Palette },
-  { label: "Enterprise", icon: Building2 },
-  { label: "Personal", icon: User },
+  { label: "Explore",    icon: Compass,   href: "/" },
+  { label: "Creative",   icon: Palette,   href: "/creative" },
+  { label: "Enterprise", icon: Building2, href: "/enterprise" },
+  { label: "Personal",   icon: User,      href: "/personal" },
 ];
 
 interface SidebarProps {
   expanded: boolean;
   onToggle: () => void;
+  profile?: React.ReactNode;
 }
 
-export default function Sidebar({ expanded, onToggle }: SidebarProps) {
-  const [active, setActive] = useState("Explore");
+export default function Sidebar({ expanded, onToggle, profile }: SidebarProps) {
+  const pathname = usePathname();
 
   return (
     <aside
@@ -36,31 +37,23 @@ export default function Sidebar({ expanded, onToggle }: SidebarProps) {
 
       {/* Nav */}
       <nav className="flex flex-col gap-1 flex-1">
-        {navItems.map(({ label, icon: Icon }) => (
-          <button
-            key={label}
-            onClick={() => setActive(label)}
-            title={!expanded ? label : undefined}
-            className={`flex items-center gap-3 px-2 py-2 rounded-lg text-sm transition-colors text-left ${
-              active === label
-                ? "bg-white/10 text-white"
-                : "text-white/50 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <Icon size={16} className="shrink-0" />
-            {expanded && <span className="whitespace-nowrap">{label}</span>}
-          </button>
-        ))}
+        {navItems.map(({ label, icon: Icon, href }) => {
+          const active = pathname === href;
+          return (
+            <Link
+              key={label}
+              href={href}
+              title={!expanded ? label : undefined}
+              className={`flex items-center gap-3 px-2 py-2 rounded-lg text-sm transition-colors ${
+                active ? "bg-white/10 text-white" : "text-white/50 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Icon size={16} className="shrink-0" />
+              {expanded && <span className="whitespace-nowrap">{label}</span>}
+            </Link>
+          );
+        })}
       </nav>
-
-      {/* Create Agent */}
-      <button
-        title={!expanded ? "Create Agent" : undefined}
-        className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 transition-colors text-white text-sm font-medium px-2 py-2.5 rounded-lg mb-6"
-      >
-        <Plus size={16} className="shrink-0" />
-        {expanded && <span className="whitespace-nowrap">Create Agent</span>}
-      </button>
 
       {/* Bottom links */}
       <div className="flex flex-col gap-1">
@@ -78,9 +71,10 @@ export default function Sidebar({ expanded, onToggle }: SidebarProps) {
           <HelpCircle size={14} className="shrink-0" />
           {expanded && <span className="whitespace-nowrap">Help</span>}
         </button>
+        {profile && <div className="mt-1 border-t border-white/5 pt-2">{profile}</div>}
       </div>
 
-      {/* Toggle button */}
+      {/* Toggle */}
       <button
         onClick={onToggle}
         className="mt-4 flex items-center justify-center w-full py-1.5 rounded-lg text-white/30 hover:text-white hover:bg-white/5 transition-colors"
