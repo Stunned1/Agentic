@@ -10,7 +10,7 @@ export default async function Topbar() {
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <header className="fixed top-0 left-52 right-0 h-14 bg-[#0a0a0f]/80 backdrop-blur border-b border-white/5 flex items-center justify-between px-8 z-10">
+    <header className="sticky top-0 h-14 bg-[#0f0f17]/90 backdrop-blur border-b border-white/5 flex items-center justify-between px-8 z-10 rounded-t-xl">
       <div />
       <nav className="flex items-center gap-6">
         {navLinks.map((link) => (

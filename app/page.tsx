@@ -1,6 +1,7 @@
-import Sidebar from "@/components/Sidebar";
+import SidebarLayout from "@/components/SidebarLayout";
 import Topbar from "@/components/Topbar";
 import Hero from "@/components/Hero";
+import TrendingAgents from "@/components/TrendingAgents";
 import CategoryCards from "@/components/CategoryCards";
 import AgentFilters from "@/components/AgentFilters";
 import AgentGrid from "@/components/AgentGrid";
@@ -8,14 +9,16 @@ import AgentGrid from "@/components/AgentGrid";
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      <Sidebar />
-      <Topbar />
-      <main className="ml-52 pt-14 pb-16">
-        <Hero />
-        <CategoryCards />
-        <AgentFilters />
-        <AgentGrid />
-      </main>
+      <SidebarLayout>
+        <Topbar />
+        <main className="pb-16">
+          <Hero />
+          <TrendingAgents />
+          <CategoryCards />
+          <AgentFilters />
+          <AgentGrid />
+        </main>
+      </SidebarLayout>
     </div>
   );
 }
