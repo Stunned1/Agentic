@@ -13,10 +13,9 @@ function ParallaxDots() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const DOT_SPACING = 28;
-    const DOT_RADIUS = 1;
-    const MAX_GLOW_DIST = 180;
+    const GRID_SPACING = 40;
     const PARALLAX_STRENGTH = 0.018;
+    const MAX_GLOW_DIST = 200;
     let width = 0, height = 0;
 
     function resize() {
@@ -41,31 +40,45 @@ function ParallaxDots() {
       const my = mouse.current.y;
       const offsetX = (mx - width / 2) * PARALLAX_STRENGTH;
       const offsetY = (my - height / 2) * PARALLAX_STRENGTH;
-      const cols = Math.ceil(width / DOT_SPACING) + 2;
-      const rows = Math.ceil(height / DOT_SPACING) + 2;
 
-      for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-          const baseX = i * DOT_SPACING - DOT_SPACING / 2 + offsetX;
-          const baseY = j * DOT_SPACING - DOT_SPACING / 2 + offsetY;
-          const dx = baseX - mx, dy = baseY - my;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const proximity = Math.max(0, 1 - dist / MAX_GLOW_DIST);
-          const alpha = 0.1 + proximity * 0.35;
-          const radius = DOT_RADIUS + proximity * 1.2;
-          const r = Math.round(80 + proximity * 100);
-          const g = Math.round(80 + proximity * 20);
-          const b = Math.round(100 + proximity * 155);
-          ctx.beginPath();
-          ctx.arc(baseX, baseY, radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
-          ctx.fill();
-        }
+      // vertical lines
+      const startX = (offsetX % GRID_SPACING) - GRID_SPACING;
+      for (let x = startX; x < width + GRID_SPACING; x += GRID_SPACING) {
+        const dx = x - mx;
+        const proximity = Math.max(0, 1 - Math.abs(dx) / MAX_GLOW_DIST);
+        const alpha = 0.04 + proximity * 0.12;
+        const r = Math.round(80 + proximity * 100);
+        const g = Math.round(80 + proximity * 20);
+        const b = Math.round(120 + proximity * 135);
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
       }
 
+      // horizontal lines
+      const startY = (offsetY % GRID_SPACING) - GRID_SPACING;
+      for (let y = startY; y < height + GRID_SPACING; y += GRID_SPACING) {
+        const dy = y - my;
+        const proximity = Math.max(0, 1 - Math.abs(dy) / MAX_GLOW_DIST);
+        const alpha = 0.04 + proximity * 0.12;
+        const r = Math.round(80 + proximity * 100);
+        const g = Math.round(80 + proximity * 20);
+        const b = Math.round(120 + proximity * 135);
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // radial glow under cursor
       if (mx > -9000) {
         const grd = ctx.createRadialGradient(mx, my, 0, mx, my, 260);
-        grd.addColorStop(0, "rgba(139,92,246,0.035)");
+        grd.addColorStop(0, "rgba(139,92,246,0.04)");
         grd.addColorStop(1, "rgba(139,92,246,0)");
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, width, height);

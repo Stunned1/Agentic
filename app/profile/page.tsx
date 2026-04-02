@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import SignOutButton from "@/components/SignOutButton";
+import SidebarLayout from "@/components/SidebarLayout";
+import SidebarProfile from "@/components/SidebarProfile";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -9,7 +11,8 @@ export default async function ProfilePage() {
   if (!user) redirect("/sign-in");
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] ml-52 pt-14">
+    <div className="min-h-screen bg-[#0a0a0f]">
+      <SidebarLayout profile={<SidebarProfile />}>
       <div className="max-w-2xl mx-auto px-8 py-12">
         {/* Avatar + name */}
         <div className="flex items-center gap-4 mb-10">
@@ -57,6 +60,7 @@ export default async function ProfilePage() {
 
         <SignOutButton signOut />
       </div>
+      </SidebarLayout>
     </div>
   );
 }

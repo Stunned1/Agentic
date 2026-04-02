@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Palette, Building2, User, Settings, HelpCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { Compass, Palette, Building2, User, HelpCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 const navItems = [
   { label: "Explore",    icon: Compass,   href: "/" },
@@ -57,13 +57,6 @@ export default function Sidebar({ expanded, onToggle, profile }: SidebarProps) {
 
       {/* Bottom links */}
       <div className="flex flex-col gap-1">
-        <button
-          title={!expanded ? "Settings" : undefined}
-          className="flex items-center gap-2 text-white/40 hover:text-white text-xs px-2 py-1.5 rounded transition-colors"
-        >
-          <Settings size={14} className="shrink-0" />
-          {expanded && <span className="whitespace-nowrap">Settings</span>}
-        </button>
         <button
           title={!expanded ? "Help" : undefined}
           className="flex items-center gap-2 text-white/40 hover:text-white text-xs px-2 py-1.5 rounded transition-colors"
