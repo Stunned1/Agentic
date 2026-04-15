@@ -6,20 +6,20 @@ const agents = [
 
 export default function AgentGrid() {
   return (
-    <section className="grid grid-cols-3 gap-4 px-8 max-w-4xl mx-auto">
+    <section className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-4 sm:grid-cols-2 sm:px-8 lg:grid-cols-3">
       {agents.map((agent) => (
         <div
           key={agent.id}
-          className="bg-[#111118] border border-white/5 rounded-xl overflow-hidden hover:border-purple-500/30 transition-colors cursor-pointer group"
+          className="group cursor-pointer overflow-hidden rounded-xl border border-white/8 bg-[#111118]/70 transition-colors hover:border-cyan-300/30"
         >
           <div className={`h-40 bg-gradient-to-br ${agent.gradient} relative`}>
-            <span className="absolute top-3 right-3 text-[10px] font-bold bg-white/10 border border-white/20 px-2 py-0.5 rounded text-white/80 tracking-widest">
+            <span className="absolute right-3 top-3 rounded-md border border-white/20 bg-white/10 px-2 py-0.5 text-[10px] font-bold text-white/80">
               {agent.tag}
             </span>
           </div>
           <div className="p-4">
-            <h4 className="font-semibold text-sm">{agent.name}</h4>
-            <p className="text-white/40 text-xs mt-1">Autonomous AI Agent</p>
+            <h4 className="text-sm font-bold text-white">{agent.name}</h4>
+            <p className="mt-1 text-xs text-white/42">Autonomous AI Agent</p>
           </div>
         </div>
       ))}

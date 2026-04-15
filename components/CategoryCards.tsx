@@ -21,17 +21,17 @@ const categories: { icon: LucideIcon; title: string; desc: string }[] = [
 
 export default function CategoryCards() {
   return (
-    <section className="grid grid-cols-3 gap-4 px-8 max-w-4xl mx-auto mb-12">
+    <section className="mx-auto mb-12 grid max-w-6xl grid-cols-1 gap-4 px-4 sm:px-8 lg:grid-cols-3">
       {categories.map(({ icon: Icon, title, desc }) => (
         <div
           key={title}
-          className="bg-[#111118] border border-white/5 rounded-xl p-6 hover:border-purple-500/30 transition-colors cursor-pointer"
+          className="cursor-pointer rounded-xl border border-white/8 bg-[#111118]/70 p-6 transition-colors hover:border-cyan-300/30"
         >
-          <div className="mb-12 text-white/60">
+          <div className="mb-10 text-white/64">
             <Icon size={28} strokeWidth={1.5} />
           </div>
-          <h3 className="text-base font-semibold mb-1">{title}</h3>
-          <p className="text-white/40 text-xs leading-relaxed">{desc}</p>
+          <h3 className="mb-1 text-base font-bold text-white">{title}</h3>
+          <p className="text-xs leading-relaxed text-white/45">{desc}</p>
         </div>
       ))}
     </section>

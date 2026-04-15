@@ -19,23 +19,23 @@ export default function TrendingAgents() {
   const [activeTab, setActiveTab] = useState("Trending");
 
   return (
-    <section className="px-8 max-w-5xl mx-auto mb-16">
+    <section className="mx-auto mb-16 max-w-6xl px-4 sm:px-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-5">
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
-          <TrendingUp size={18} className="text-purple-400" />
-          <h2 className="text-base font-semibold text-white">Trending Now</h2>
+          <TrendingUp size={18} className="text-cyan-300" />
+          <h2 className="text-lg font-bold text-white">Trending Now</h2>
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-1 bg-white/5 border border-white/5 rounded-lg p-1">
+        <div className="flex w-fit items-center gap-1 rounded-lg border border-white/8 bg-white/[0.04] p-1">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
+              className={`rounded-md px-3 py-1 text-xs font-bold transition-colors ${
                 activeTab === tab
-                  ? "bg-purple-600 text-white"
+                  ? "bg-white text-[#111118]"
                   : "text-white/40 hover:text-white"
               }`}
             >
@@ -46,18 +46,18 @@ export default function TrendingAgents() {
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {agents.map((agent) => (
           <div
             key={agent.id}
-            className="bg-[#111118] border border-white/5 rounded-xl overflow-hidden hover:border-purple-500/30 hover:-translate-y-0.5 transition-all cursor-pointer group"
+            className="group cursor-pointer overflow-hidden rounded-xl border border-white/8 bg-[#111118]/86 transition-all hover:-translate-y-0.5 hover:border-cyan-300/30"
           >
             {/* Gradient banner */}
             <div className={`h-28 bg-gradient-to-br ${agent.gradient} relative`}>
-              <span className="absolute top-2 left-2 text-[9px] font-bold bg-black/30 border border-white/20 px-1.5 py-0.5 rounded tracking-widest text-white/80">
+              <span className="absolute left-2 top-2 rounded-md border border-white/20 bg-black/30 px-1.5 py-0.5 text-[9px] font-bold text-white/80">
                 {agent.tag}
               </span>
-              <span className="absolute top-2 right-2 flex items-center gap-0.5 text-[10px] font-semibold text-emerald-400 bg-black/30 px-1.5 py-0.5 rounded">
+              <span className="absolute right-2 top-2 flex items-center gap-0.5 rounded-md bg-black/30 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
                 <Zap size={9} className="fill-emerald-400" />
                 {agent.trend}
               </span>
@@ -65,12 +65,12 @@ export default function TrendingAgents() {
 
             {/* Info */}
             <div className="p-3">
-              <div className="flex items-start justify-between mb-1">
+              <div className="mb-1 flex items-start justify-between gap-3">
                 <div>
-                  <h4 className="text-sm font-semibold text-white">{agent.name}</h4>
+                  <h4 className="text-sm font-bold text-white">{agent.name}</h4>
                   <p className="text-[11px] text-white/40">{agent.category}</p>
                 </div>
-                <span className="text-sm font-bold text-purple-400">${agent.price}<span className="text-[10px] text-white/30 font-normal">/mo</span></span>
+                <span className="whitespace-nowrap text-sm font-bold text-white">${agent.price}<span className="text-[10px] font-semibold text-white/30">/mo</span></span>
               </div>
               <div className="flex items-center gap-1 mt-2">
                 <Star size={11} className="text-yellow-400 fill-yellow-400" />
@@ -82,7 +82,7 @@ export default function TrendingAgents() {
       </div>
 
       {/* View all */}
-      <button className="mt-5 flex items-center gap-1.5 text-sm text-white/40 hover:text-purple-400 transition-colors mx-auto">
+      <button className="mx-auto mt-5 flex items-center gap-1.5 text-sm font-bold text-white/42 transition-colors hover:text-cyan-300">
         View all trending agents <ArrowRight size={14} />
       </button>
     </section>

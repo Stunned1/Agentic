@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import SignOutButton from "@/components/SignOutButton";
 import SidebarLayout from "@/components/SidebarLayout";
 import SidebarProfile from "@/components/SidebarProfile";
+import AvatarUpload from "@/components/AvatarUpload";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -10,15 +11,15 @@ export default async function ProfilePage() {
 
   if (!user) redirect("/sign-in");
 
+  const { data: profile } = await supabase.from("profiles").select("avatar_url").eq("id", user.id).single();
+
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
       <SidebarLayout profile={<SidebarProfile />}>
       <div className="max-w-2xl mx-auto px-8 py-12">
         {/* Avatar + name */}
         <div className="flex items-center gap-4 mb-10">
-          <div className="w-16 h-16 rounded-full bg-purple-600/60 border border-purple-500/40 flex items-center justify-center text-xl font-bold">
-            {user.email?.[0].toUpperCase()}
-          </div>
+          <AvatarUpload initial={profile?.avatar_url} fallback={user.email?.[0].toUpperCase() ?? "U"} />
           <div>
             <h1 className="text-xl font-semibold">{user.email}</h1>
             <p className="text-white/40 text-sm">Member since {new Date(user.created_at).toLocaleDateString()}</p>
